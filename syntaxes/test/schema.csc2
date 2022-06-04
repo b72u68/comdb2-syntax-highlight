@@ -1,0 +1,15 @@
+// schema
+schema {
+    cstring      first_name[32]                    // first name
+    cstring      last_name[32]
+    int          userid
+    longlong     sequence    dbstore=nextsequence
+    double       balance     dbstore=100.00 null= yes
+    datetime     paydate     dbstore={CURRENT_TIMESTAMP}
+    byte         autoid[16]  dbstore={GUID()}
+    byte         permissions[12]
+}
+
+keys {
+    "PK" = autoid
+}

@@ -1,0 +1,116 @@
+{
+	"$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+	"name": "Comdb2",
+	"scopeName": "source.csc2",
+    "fileTypes": [".csc2"],
+	"patterns": [
+		{
+			"include": "#keywords"
+		},
+		{
+			"include": "#strings"
+		},
+		{
+			"include": "#comments"
+		},
+        {
+            "include": "#types"
+        },
+        {
+            "include": "#constants"
+        }
+	],
+	"repository": {
+        "types": {
+            "patterns": [
+                {
+                    // Integer types
+                    "name": "storage.type.comdb2",
+                    "match": "\\b(short|u_short|int|u_int|longlong)\\b"
+                },
+                {
+                    // Floating point types
+                    "name": "storage.type.comdb2",
+                    "match": "\\b(float|double)\\b"
+                },
+                {
+                    // Decimal types
+                    "name": "storage.type.comdb2",
+                    "match": "\\b(decimal32|decimal64|decimal128)\\b"
+                },
+                {
+                    // Byte types
+                    "name": "storage.type.comdb2",
+                    "match": "\\b(byte|blob)\\b"
+                },
+                {
+                    // String types
+                    "name": "storage.type.comdb2",
+                    "match": "\\b(cstring|vutf8)\\b"
+                },
+                {
+                    // Datetime types
+                    "name": "storage.type.comdb2",
+                    "match": "\\b(datetime|datetimeus)\\b"
+                },
+                {
+                    // Interval types
+                    "name": "storage.type.comdb2",
+                    "match": "\\b(intervalds|intervaldsus|intervalym)\\b"
+                }
+            ]
+        },
+        "constants": {
+            "patterns": [
+                {
+                    // Matching integer and floating point
+                    "name": "constant.numeric.comdb2",
+                    "match": "(\\-|\\+)?[0-9]+(\\.[0-9]+(E(\\-|\\+)[0-9]+)?)?"
+                },
+                {
+                    // Matching special cases
+                    "name": "constant.numeric.comdb2",
+                    "match": "((\\-|\\+)Inf)|NaN"
+                },
+                {
+                    // Matching decimal
+                    "name": "constant.numeric.comdb2",
+                    "match": ""
+                }
+            ]
+        },
+		"keywords": {
+			"patterns": [{
+				"name": "keyword.control.comdb2",
+				"match": "\\b(constants|keys|constraints|schema)\\b"
+			}]
+		},
+		"strings": {
+			"name": "string.quoted.double.comdb2",
+			"begin": "\"",
+			"end": "\"",
+			"patterns": [
+				{
+					"name": "constant.character.escape.comdb2",
+					"match": "\\\\."
+				}
+			]
+		},
+		"comments": {
+			"patterns": [
+				{
+                    // Matching line comment
+					"name": "comment.line.double-slash.comdb2",
+					"begin": "//",
+					"end": "\\n"
+				},
+				{
+                    // Matching block comment
+					"name": "comment.block.comdb2",
+					"begin": "/\\*",
+					"end": "\\*/"
+				}
+			]
+		}
+	}
+}
