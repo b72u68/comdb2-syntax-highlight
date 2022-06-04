@@ -18,16 +18,13 @@
     },
     {
       "include": "#constants"
-    },
-    {
-      "include": "#functions"
     }
   ],
   "repository": {
     "types": {
       "patterns": [
         {
-          "name": "storage.type.comdb2",
+          "name": "entity.name.type.comdb2",
           "match": "\\b(short|u_short|int|u_int|longlong)\\b"
         },
         {
