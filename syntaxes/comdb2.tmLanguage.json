@@ -5,7 +5,7 @@
   "fileTypes": [".csc2"],
   "patterns": [
     {
-      "include": "#schema"
+      "include": "#schema_section"
     },
     {
       "include": "#keywords"
@@ -17,15 +17,14 @@
       "include": "#comments"
     },
     {
-      "include": "#type"
+      "include": "#types"
+    },
+    {
+      "include": "#constants"
     }
   ],
   "repository": {
-    "keywords": {
-      "name": "keyword.other.comdb2",
-      "match": "\\b(schema|keys|constants|constraints|dbstore|null|dup|uniqnulls|datacopy|<DESCEND>|where|on|delete|update|cascade|restrict|set|check)\\b"
-    },
-    "schema": {
+    "schema_section": {
       "name": "meta.schema.comdb2",
       "begin": "(schema)\\s*{",
       "end": "}",
@@ -38,23 +37,59 @@
         },
         {
           "name": "meta.schema.field.integer.comdb2",
-          "match": "\\s*(short|u_short|int|u_int|longlong)\\s+(\\w+)(\\s+dbstore\\s*=\\s*(nextsequence|(\\-)?\\d+)|{[a-zA-Z_]+})?(\\s+null\\s*=\\s*(yes|no))?",
+          "match": "\\s*(short|u_short|int|u_int|longlong)\\s+(\\w+)(\\s+dbstore\\s*=\\s*(nextsequence|\\-?\\d+|{[a-zA-Z()_]+}))?(\\s+null\\s*=\\s*(yes|no))?",
           "captures": {
-            "1": { "name": "storage.type.comdb2" }
+            "1": { "patterns": [{ "include": "#types" }] },
+            "3": {
+              "patterns": [
+                { "include": "#keywords" },
+                { "include": "#constants" }
+              ]
+            },
+            "5": {
+              "patterns": [
+                { "include": "#keywords" },
+                { "include": "#constants" }
+              ]
+            }
           }
         },
         {
           "name": "meta.schema.field.float.comdb2",
-          "match": "\\s*(float|double)\\s+(\\w+)(\\s+dbstore\\s*=\\s*(nextsequence|(\\-)?\\d+\\.\\d+(E(\\+|\\-)\\d+)?|NaN|(\\+|\\-)Inf|{[a-zA-Z\\(\\)_]+}))?(\\s+null\\s*=\\s*(yes|no))?",
+          "match": "\\s*(float|double)\\s+(\\w+)(\\s+dbstore\\s*=\\s*(nextsequence|\\-?\\d+\\.\\d+(E(\\+|\\-)\\d+)?|NaN|(\\+|\\-)Inf|{[a-zA-Z()_]+}))?(\\s+null\\s*=\\s*(yes|no))?",
           "captures": {
-            "1": { "name": "storage.type.comdb2" }
+            "1": { "patterns": [{ "include": "#types" }] },
+            "3": {
+              "patterns": [
+                { "include": "#keywords" },
+                { "include": "#constants" }
+              ]
+            },
+            "8": {
+              "patterns": [
+                { "include": "#keywords" },
+                { "include": "#constants" }
+              ]
+            }
           }
         },
         {
-          "match": "\\s*(decimal32|decimal64|decimal128)\\s+(\\w+)(\\s+dbstore\\s*=\\s*(nexsequence|\\+\\-\\d\\.\\d+x10\\^\\-?\\d+|{[a-zA-Z\\(\\)_]+}))?(\\s+null\\s*=\\s*(yes|no))?",
+          "match": "\\s*(decimal32|decimal64|decimal128)\\s+(\\w+)(\\s+dbstore\\s*=\\s*(nexsequence|\\+\\-\\d\\.\\d+x10\\^\\-?\\d+|{[a-zA-Z()_]+}))?(\\s+null\\s*=\\s*(yes|no))?",
           "name": "meta.schema.field.decimal.comdb2",
           "captures": {
-            "1": { "name": "storage.type.comdb2" }
+            "1": { "patterns": [{ "include": "#types" }] },
+            "3": {
+              "patterns": [
+                { "include": "#keywords" },
+                { "include": "#constants" }
+              ]
+            },
+            "6": {
+              "patterns": [
+                { "include": "#keywords" },
+                { "include": "#constants" }
+              ]
+            }
           }
         },
         {
@@ -62,32 +97,98 @@
           "patterns": [
             {
               "name": "meta.schema.field.blob.blob.comdb2",
-              "match": "\\s*(blob)\\s+(\\w+)(\\s+dbstore\\s*=\\s*(nextsequence|{[a-zA-Z\\(\\)_]+}|.*))?(\\s+null\\s*=\\s*(yes|no))?",
+              "match": "\\s*(blob)\\s+(\\w+)(\\s+dbstore\\s*=\\s*(nextsequence|{[a-zA-Z()_]+}|.*))?(\\s+null\\s*=\\s*(yes|no))?",
               "captures": {
-                "1": { "name": "storage.type.comdb2" }
+                "1": { "patterns": [{ "include": "#types" }] },
+                "3": {
+                  "patterns": [
+                    { "include": "#keywords" },
+                    { "include": "#constants" }
+                  ]
+                },
+                "5": {
+                  "patterns": [
+                    { "include": "#keywords" },
+                    { "include": "#constants" }
+                  ]
+                }
               }
             },
             {
               "name": "meta.schema.field.blob.byte.comdb2",
-              "match": "\\s*(byte)\\s+(\\w+\\[\\d+\\])(\\s+dbstore\\s*=\\s*(nextsequence|{[a-zA-Z\\(\\)_]+}|.*))?(\\s+null\\s*=\\s*(yes|no))?",
+              "match": "\\s*(byte)\\s+(\\w+\\[\\d+\\])(\\s+dbstore\\s*=\\s*(nextsequence|{[a-zA-Z()_]+}|.*))?(\\s+null\\s*=\\s*(yes|no))?",
               "captures": {
-                "1": { "name": "storage.type.comdb2" }
+                "1": { "patterns": [{ "include": "#types" }] },
+                "2": { "patterns": [{ "include": "#constants" }] },
+                "3": {
+                  "patterns": [
+                    { "include": "#keywords" },
+                    { "include": "constants" }
+                  ]
+                },
+                "5": {
+                  "patterns": [
+                    { "include": "#keywords" },
+                    { "include": "#constants" }
+                  ]
+                }
               }
             }
           ]
         },
         {
           "name": "meta.schema.field.text.comdb2",
-          "match": "\\s*(cstring|vutf8)\\s+(\\w+\\[\\d+\\])(\\s+dbstore\\s*=\\s*(nextsequence|{[a-zA-Z\\(\\)_]+}|\".*\"))?(\\s+null\\s*=\\s*(yes|no))?",
+          "match": "\\s*(cstring|vutf8)\\s+(\\w+\\[\\d+\\])(\\s+dbstore\\s*=\\s*(nextsequence|{[a-zA-Z()_]+}|\".*\"))?(\\s+null\\s*=\\s*(yes|no))?",
           "captures": {
-            "1": { "name": "storage.type.comdb2" }
+            "1": { "patterns": [{ "include": "#types" }] },
+            "2": { "patterns": [{ "include": "#constants" }] },
+            "3": { "patterns": [{ "include": "#keywords" }] },
+            "5": { "patterns": [{ "include": "#keywords" }] }
+          }
+        },
+        {
+          "name": "meta.schema.field.datetime.comdb2",
+          "match": "\\s*(datetime|datetimeus)\\s+(\\w+)(\\s+dbstore\\s*=\\s*(nextsequence|{[a-zA-Z()_]+}|(\\-)?\\d{4}\\-\\d{2}\\-\\d{2}(T\\d{2}(:\\d{2}(:\\d{2}\\.\\d{3})?)?)?|(\\-)?\\d{4}\\-\\d{2}\\-\\d{2}(T\\d{2}(\\d{2}(\\d{2}\\.\\d{3})?)?)? [A-Z]{3}))?(\\s+null\\s*=\\s*(yes|no))?",
+          "captures": {
+            "1": { "patterns": [{ "include": "#types" }] },
+            "3": { "patterns": [{ "include": "#keywords" }] },
+            "4": { "patterns": [{ "include": "#keywords" }] }
           }
         }
       ]
     },
+    "keywords": {
+      "name": "keyword.other.comdb2",
+      "match": "\\b(schema|keys|constants|constraints|dbstore|nextsequence|null|dup|uniqnulls|datacopy|<DESCEND>|where|on|delete|update|cascade|restrict|set|check)\\b"
+    },
     "types": {
       "name": "storage.type.comdb2",
-      "match": "(double|u_short|short|u_int|int|longlong|datetime|datetimeus|intervalds|intervaldsus|intervalym|decimal32|decimal64|decimal128|cstring|vutf8|blob|byte)"
+      "match": "\\b(double|u_short|short|u_int|int|longlong|datetime|datetimeus|intervalds|intervaldsus|intervalym|decimal32|decimal64|decimal128|cstring|vutf8|blob|byte)\\b"
+    },
+    "constants": {
+      "name": "constant.comdb2",
+      "patterns": [
+        {
+          "name": "constant.decimal.comdb2",
+          "match": "\\+\\-\\d\\.\\d+x10\\^\\-?\\d+"
+        },
+        {
+          "name": "constant.float.comdb2",
+          "match": "\\-?\\d+\\.\\d+(E(\\+|\\-)\\d+)?"
+        },
+        {
+          "name": "constant.integer.comdb2",
+          "match": "\\-?\\d+"
+        },
+        {
+          "name": "constant.datetime.comdb2",
+          "match": "(\\-)?\\d{4}\\-\\d{2}\\-\\d{2}(T\\d{2}(:\\d{2}(:\\d{2}\\.\\d{3})?)?)?|(\\-)?\\d{4}\\-\\d{2}\\-\\d{2}(T\\d{2}(\\d{2}(\\d{2}\\.\\d{3})?)?)? [A-Z]{3}"
+        },
+        {
+          "name": "constant.language.comdb2",
+          "match": "\\b(yes|no)\\b"
+        }
+      ]
     },
     "strings": {
       "name": "string.quoted.double.comdb2",
