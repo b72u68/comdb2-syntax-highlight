@@ -41,6 +41,7 @@
       },
       "patterns": [
         { "include": "#comments" },
+        { "include": "#constants" },
         {
           "name": "meta.constants.definition.comdb2",
           "match": "\\s*(\\w+)\\s*=\\s*(\\-?\\d+)",
@@ -61,9 +62,9 @@
         "1": { "name": "keyword.other.schema.comdb2" }
       },
       "patterns": [
-        {
-          "include": "#comments"
-        },
+        { "include": "#comments" },
+        { "include": "#keywords" },
+        { "include": "#types" },
         {
           "name": "meta.schema.field.integer.comdb2",
           "match": "\\s*(short|u_short|int|u_int|longlong)\\s+(\\w+)(\\s+dbstore\\s*=\\s*(nextsequence|\\-?\\d+|{[a-zA-Z()_]+}))?(\\s+null\\s*=\\s*(yes|no))?",
@@ -215,6 +216,8 @@
       },
       "patterns": [
         { "include": "#comments" },
+        { "include": "#keywords" },
+        { "include": "#strings" },
         {
           "name": "meta.key.definition.comdb2",
           "match": "^\\s*((dup)?|(uniqnulls)?)(\\s+datacopy(\\s+\\((\\s*[a-zA-Z0-9_]+\\s*,)*(\\s*[a-zA-Z0-9_]+\\s*)\\)))?\\s+(\".+\")\\s*=(\\s*(<DESCEND>)?\\s*[a-zA-Z0-9_]+\\s*\\+)*(\\s*(<DESCEND>)?\\s*[a-zA-Z0-9_]+)",
@@ -230,11 +233,11 @@
     },
     "keywords": {
       "name": "keyword.other.comdb2",
-      "match": "(schema|keys|constants|constraints|dbstore|nextsequence|null|dup|uniqnulls|datacopy|<DESCEND>|where|on|delete|update|cascade|restrict|set|check)"
+      "match": "(\\b(schema|keys|constants|constraints|dbstore|nextsequence|null|dup|uniqnulls|datacopy|where|on|delete|update|cascade|restrict|set|check)\\b|<DESCEND>)"
     },
     "types": {
       "name": "storage.type.comdb2",
-      "match": "(double|u_short|short|u_int|int|longlong|datetime|datetimeus|intervalds|intervaldsus|intervalym|decimal32|decimal64|decimal128|cstring|vutf8|blob|byte)"
+      "match": "\\b(double|u_short|short|u_int|int|longlong|datetime|datetimeus|intervalds|intervaldsus|intervalym|decimal32|decimal64|decimal128|cstring|vutf8|blob|byte)\\b"
     },
     "constants": {
       "name": "constant.comdb2",
@@ -257,7 +260,7 @@
         },
         {
           "name": "constant.language.comdb2",
-          "match": "(yes|no)"
+          "match": "\\b(yes|no)\\b"
         }
       ]
     },
