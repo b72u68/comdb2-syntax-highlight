@@ -1,4 +1,3 @@
-// schema
 constants {
     ZERO=0,
     ONE=1,
@@ -6,24 +5,23 @@ constants {
     THREE=3,
     SEVEN=7,
     HELLO=-44,
-    TWELVE=12,
-    INF=+Inf,
-    NEGINF=-Inf,
-    DEC=-1.7976931348623157E+308,
-    FP=-3.402823466E+38
+    TWELVE=12
 }
 
 schema {
     cstring      first_name[32]                    // first name
     cstring      last_name[32]
-    int          userid
+    int          userid     dbstore=10 null=yes
     longlong     sequence    dbstore=nextsequence
     double       balance     dbstore=100.00 null=yes
-    datetime     paydate     dbstore={CURRENT_TIMESTAMP}
     byte         autoid[16]  dbstore={GUID()}
     byte         permissions[12]
+    datetime     paydate     dbstore={CURRENT_TIMESTAMP}
 }
 
 keys {
-    "PK" = autoid
+       "PK" = autoid
+       "KEY_SERIAL" = userid
+  dup  "KEY_NAME" = last_name + first_name
+  dup  "KEY_DATE" = paydate
 }
