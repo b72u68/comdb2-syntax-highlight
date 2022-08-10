@@ -143,16 +143,31 @@
             "1": { "patterns": [{ "include": "#types" }] },
             "2": { "patterns": [{ "include": "#constants" }] },
             "3": { "patterns": [{ "include": "#keywords" }] },
-            "5": { "patterns": [{ "include": "#keywords" }] }
+            "5": {
+              "patterns": [
+                { "include": "#keywords" },
+                { "include": "#constants" }
+              ]
+            }
           }
         },
         {
           "name": "meta.schema.field.datetime.comdb2",
-          "match": "\\s*(datetime|datetimeus)\\s+(\\w+)(\\s+dbstore\\s*=\\s*(nextsequence|{[a-zA-Z()_]+}|(\\-)?\\d{4}\\-\\d{2}\\-\\d{2}(T\\d{2}(:\\d{2}(:\\d{2}\\.\\d{3})?)?)?|(\\-)?\\d{4}\\-\\d{2}\\-\\d{2}(T\\d{2}(\\d{2}(\\d{2}\\.\\d{3})?)?)? [A-Z]{3}))?(\\s+null\\s*=\\s*(yes|no))?",
+          "match": "\\s*(datetime|datetimeus)\\s+(\\w+)(\\s+dbstore\\s*=\\s*(nextsequence|{[a-zA-Z()_]+}|\"(\\-)?\\d{4}\\-\\d{2}\\-\\d{2}(T\\d{2}(\\:\\d{2}(\\:\\d{2}(\\.\\d{3,6})?)?)?)?(\\s[a-zA-Z/_]+)?\"|\"(\\-)?\\d{4}\\-\\d{2}\\-\\d{2}(T\\d{2}(\\d{2}(\\d{2}(\\.\\d{3,6})?)?)?)?(\\s[a-zA-Z/_]+)?)\")?(\\s+null\\s*=\\s*(yes|no))?",
           "captures": {
             "1": { "patterns": [{ "include": "#types" }] },
-            "3": { "patterns": [{ "include": "#keywords" }] },
-            "4": { "patterns": [{ "include": "#keywords" }] }
+            "3": {
+              "patterns": [
+                { "include": "#keywords" },
+                { "include": "#constants" }
+              ]
+            },
+            "18": {
+              "patterns": [
+                { "include": "#keywords" },
+                { "include": "#constants" }
+              ]
+            }
           }
         }
       ]
@@ -169,6 +184,10 @@
       "name": "constant.comdb2",
       "patterns": [
         {
+          "name": "constant.datetime.comdb2",
+          "match": "\"((\\-)?\\d{4}\\-\\d{2}\\-\\d{2}(T\\d{2}(\\:\\d{2}(\\:\\d{2}(\\.\\d{3,6})?)?)?)?(\\s[a-zA-Z/_]+)?|(\\-)?\\d{4}\\-\\d{2}\\-\\d{2}(T\\d{2}(\\d{2}(\\d{2}(\\.\\d{3,6})?)?)?)?(\\s[a-zA-Z/_]+)?)\""
+        },
+        {
           "name": "constant.decimal.comdb2",
           "match": "\\+\\-\\d\\.\\d+x10\\^\\-?\\d+"
         },
@@ -179,10 +198,6 @@
         {
           "name": "constant.integer.comdb2",
           "match": "\\-?\\d+"
-        },
-        {
-          "name": "constant.datetime.comdb2",
-          "match": "(\\-)?\\d{4}\\-\\d{2}\\-\\d{2}(T\\d{2}(:\\d{2}(:\\d{2}\\.\\d{3})?)?)?|(\\-)?\\d{4}\\-\\d{2}\\-\\d{2}(T\\d{2}(\\d{2}(\\d{2}\\.\\d{3})?)?)? [A-Z]{3}"
         },
         {
           "name": "constant.language.comdb2",
