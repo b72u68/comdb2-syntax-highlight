@@ -1,25 +1,36 @@
 {
-    "name": "comdb2-syntax-highlight",
-    "displayName": "comdb2-syntax-highlight",
-    "description": "Syntax highlight support for Comdb2",
-    "version": "0.0.1",
-    "engines": {
-        "vscode": "^1.67.0"
-    },
-    "categories": [
-        "Programming Languages"
+  "name": "comdb2-syntax-highlight",
+  "displayName": "comdb2-syntax-highlight",
+  "description": "Syntax highlight support for Comdb2",
+  "icon": "images/comdb2.png",
+  "version": "1.0.0",
+  "engines": {
+    "vscode": "^1.67.0"
+  },
+  "categories": [
+    "Programming Languages"
+  ],
+  "contributes": {
+    "languages": [
+      {
+        "id": "comdb2",
+        "aliases": [
+          "Comdb2",
+          "comdb2"
+        ],
+        "extensions": [
+          ".csc2"
+        ],
+        "configuration": "./language-configuration.json"
+      }
     ],
-    "contributes": {
-        "languages": [{
-            "id": "comdb2",
-            "aliases": ["Comdb2", "comdb2"],
-            "extensions": [".csc2"],
-            "configuration": "./language-configuration.json"
-        }],
-        "grammars": [{
-            "language": "comdb2",
-            "scopeName": "source.csc2",
-            "path": "./syntaxes/comdb2.tmLanguage.json"
-        }]
-    }
+    "grammars": [
+      {
+        "language": "comdb2",
+        "scopeName": "source.csc2",
+        "path": "./syntaxes/comdb2.tmLanguage.json"
+      }
+    ]
+  }
 }
+
