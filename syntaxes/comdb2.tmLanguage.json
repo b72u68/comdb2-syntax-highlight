@@ -8,6 +8,12 @@
       "include": "#schema_section"
     },
     {
+      "include": "#constants_section"
+    },
+    {
+      "include": "#key_section"
+    },
+    {
       "include": "#keywords"
     },
     {
@@ -24,6 +30,29 @@
     }
   ],
   "repository": {
+    "constants_section": {
+      "name": "meta.constants.comdb2",
+      "begin": "(constants)\\s*{",
+      "end": "}",
+      "beginCaptures": {
+        "1": {
+          "name": "keyword.other.constants.comdb2"
+        }
+      },
+      "patterns": [
+        { "include": "#comments" },
+        {
+          "name": "meta.constants.definition.comdb2",
+          "match": "\\s*(\\w+)\\s*=\\s*(\\-?\\d+)",
+          "captures": {
+            "1": { "name": "constant.other.comdb2" },
+            "2": {
+              "patterns": [{ "include": "#constants" }]
+            }
+          }
+        }
+      ]
+    },
     "schema_section": {
       "name": "meta.schema.comdb2",
       "begin": "(schema)\\s*{",
@@ -142,7 +171,12 @@
           "captures": {
             "1": { "patterns": [{ "include": "#types" }] },
             "2": { "patterns": [{ "include": "#constants" }] },
-            "3": { "patterns": [{ "include": "#keywords" }] },
+            "3": {
+              "patterns": [
+                { "include": "#keywords" },
+                { "include": "#strings" }
+              ]
+            },
             "5": {
               "patterns": [
                 { "include": "#keywords" },
@@ -153,7 +187,7 @@
         },
         {
           "name": "meta.schema.field.datetime.comdb2",
-          "match": "\\s*(datetime|datetimeus)\\s+(\\w+)(\\s+dbstore\\s*=\\s*(nextsequence|{[a-zA-Z()_]+}|\"(\\-)?\\d{4}\\-\\d{2}\\-\\d{2}(T\\d{2}(\\:\\d{2}(\\:\\d{2}(\\.\\d{3,6})?)?)?)?(\\s[a-zA-Z/_]+)?\"|\"(\\-)?\\d{4}\\-\\d{2}\\-\\d{2}(T\\d{2}(\\d{2}(\\d{2}(\\.\\d{3,6})?)?)?)?(\\s[a-zA-Z/_]+)?)\")?(\\s+null\\s*=\\s*(yes|no))?",
+          "match": "\\s*(datetime|datetimeus)\\s+(\\w+)(\\s+dbstore\\s*=\\s*(nextsequence|{[a-zA-Z()_]+}|\"(\\-)?\\d{4}\\-\\d{2}\\-\\d{2}(T\\d{2}(\\:\\d{2}(\\:\\d{2}(\\.\\d{3,6})?)?)?)?(\\s[a-zA-Z/_]+)?\"|\"(\\-)?\\d{4}\\-\\d{2}\\-\\d{2}(T\\d{2}(\\d{2}(\\d{2}(\\.\\d{3,6})?)?)?)?(\\s[a-zA-Z/_]+)?\"))?(\\s+null\\s*=\\s*(yes|no))?",
           "captures": {
             "1": { "patterns": [{ "include": "#types" }] },
             "3": {
@@ -172,13 +206,35 @@
         }
       ]
     },
+    "key_section": {
+      "name": "meta.key.comdb2",
+      "begin": "(keys)\\s*{",
+      "end": "}",
+      "beginCaptures": {
+        "1": { "name": "keyword.other.keys.comdb2" }
+      },
+      "patterns": [
+        { "include": "#comments" },
+        {
+          "name": "meta.key.definition.comdb2",
+          "match": "^\\s*((dup)?|(uniqnulls)?)(\\s+datacopy(\\s+\\((\\s*[a-zA-Z0-9_]+\\s*,)*(\\s*[a-zA-Z0-9_]+\\s*)\\)))?\\s+(\".+\")\\s*=(\\s*(<DESCEND>)?\\s*[a-zA-Z0-9_]+\\s*\\+)*(\\s*(<DESCEND>)?\\s*[a-zA-Z0-9_]+)",
+          "captures": {
+            "1": { "patterns": [{ "include": "#keywords" }] },
+            "4": { "patterns": [{ "include": "#keywords" }] },
+            "8": { "patterns": [{ "include": "#strings" }] },
+            "9": { "patterns": [{ "include": "#keywords" }] },
+            "11": { "patterns": [{ "include": "#keywords" }] }
+          }
+        }
+      ]
+    },
     "keywords": {
       "name": "keyword.other.comdb2",
-      "match": "\\b(schema|keys|constants|constraints|dbstore|nextsequence|null|dup|uniqnulls|datacopy|<DESCEND>|where|on|delete|update|cascade|restrict|set|check)\\b"
+      "match": "(schema|keys|constants|constraints|dbstore|nextsequence|null|dup|uniqnulls|datacopy|<DESCEND>|where|on|delete|update|cascade|restrict|set|check)"
     },
     "types": {
       "name": "storage.type.comdb2",
-      "match": "\\b(double|u_short|short|u_int|int|longlong|datetime|datetimeus|intervalds|intervaldsus|intervalym|decimal32|decimal64|decimal128|cstring|vutf8|blob|byte)\\b"
+      "match": "(double|u_short|short|u_int|int|longlong|datetime|datetimeus|intervalds|intervaldsus|intervalym|decimal32|decimal64|decimal128|cstring|vutf8|blob|byte)"
     },
     "constants": {
       "name": "constant.comdb2",
@@ -201,7 +257,7 @@
         },
         {
           "name": "constant.language.comdb2",
-          "match": "\\b(yes|no)\\b"
+          "match": "(yes|no)"
         }
       ]
     },
